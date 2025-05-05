@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	background: linear-gradient(to right, #e3f2fd, #bbdefb);
+}
+
+.btn {
+	padding: 10px 20px;
+	background-color: #1976d2;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	margin: 10px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.btn:hover {
+	background-color: #1565c0;
+}
+
+orm {
+	width: 400px;
+	height: auto;
+	border: 2px solid black;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 20px;
+	margin: 100px auto 10px auto;
+}
+
+input, select {
+	padding: 10px;
+	font-size: 16px;
+}
+</style>
+</head>
+<body>
+<h1>Student/Teacher Login</h1>
+	<form action="ST_Login" method="post" name="st_login">
+	    <input type="text" id="stId" name="stId" placeholder="Student/Teacher ID" required> 
+		<input type="text" id="stName" name="stName" placeholder="Name" required> 
+		<input type="password" id="stPsw" name="stPsw" placeholder="Password" required>
+		<input type="password" id="stCpsw" name="stCpsw" placeholder="Conform Password" required>  
+	    <input type="text" id="crId" name="crId" placeholder="Cource Id" required> 
+		<select id="stType" name="stType">
+	    <option value="teacher">Teacher</option>
+		<option value="student">Student</option>
+		</select>
+		<div>
+		<input type="text" id="bName" name="bName" placeholder="Batch">
+		</div>
+		<button class="btn" type="submit">Submit</button>
+	</form>
+</body>
+</html>
