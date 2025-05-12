@@ -1,56 +1,251 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-body {
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	background-color: white;
-	color: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	margin: 0;
-}
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
 
-.container {
-	text-align: center;
-	background: rgba(0, 0, 0, 0.5);
-	padding: 40px;
-	border-radius: 20px;
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			/* background-color: rgb(253, 241, 228); */
+			background-color: rgb(255, 234, 192);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			/* background-image: url("plc2.jpg"); */
+		}
 
-a {
-	display: inline-block;
-	margin-top: 20px;
-	padding: 10px 20px;
-	background-color: #ffffff;
-	color: #764ba2;
-	text-decoration: none;
-	border-radius: 10px;
-	transition: 0.3s;
-}
-p b{
-color: greenyellow;
-}
+		.main-Container {
+			width: 100%;
+			height: 100vh;
+			position: relative;
+			animation: fadeIn 1.5s ease-in;
+		}
 
-a:hover {
-	background-color: #ddd;
-}
-</style>
+		.wlPic1 {
+			position: absolute;
+			width: 200px;
+			animation: floatPic1 3s ease-in-out linear;
+
+		}
+
+		.wlPic2 {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			animation: floatPic2 4s ease-in-out linear;
+		}
+
+		.hero-Text {
+			margin-top: 130px;
+			margin-left: 60px;
+			font-size: 130px;
+			color: #44403d;
+			margin-bottom: 0;
+			animation: slideIn 1.5s ease-out forwards
+		}
+
+		.sub-Hero-Text {
+			margin-top: -30px;
+			margin-left: 65px;
+			font-size: 38px;
+			color: rgb(253, 145, 22);
+
+		}
+
+		.about-Text-Box {
+			margin-top: 20px;
+			width: 640px;
+			height: 200px;
+			margin-left: 65px;
+		}
+
+		.about-Text {
+			font-size: 17px;
+			color: rgb(74, 86, 92);
+		}
+		.pageButton{
+			display: flex;
+			margin-left: 80px;
+			margin-top: -60px;
+			gap: 10px;
+		}
+		button {
+			border: none;
+			outline: none;
+			background-color: #e77213;
+			padding: 17px 40px;
+			display: flex;
+			gap: 10px;
+			font-size: 12px;
+			font-weight: 700;
+			color: #fff;
+			border-radius: 5px;
+			transition: all ease 0.1s;
+			box-shadow: 0px 15px 0px 0px #ffbf5e;
+		}
+
+		button:hover{
+			transform: translateY(5px);
+			box-shadow: 0px 10px 0px 0px #ffbf5e;
+		}
+		button:active {
+			transform: translateY(7px);
+			box-shadow: 0px 0px 0px 0px #ffbf5e;
+		}
+		ion-icon{
+			font-size: large;
+		}
+		a{
+			font-size: large;
+			text-decoration: none;
+			color: #fff;	
+		}
+
+		@media (max-width: 768px) {
+			.main-Container {
+				width: 100%;
+				height: auto;
+				text-align: center;
+			}
+
+			.hero-Text {
+				font-size: 80px;
+				text-align: center;
+				margin-left: 0;
+				margin-top: -20px;
+			}
+
+			.sub-Hero-Text {
+				font-size: 24px;
+				margin-top: -5px;
+				margin-left: 0;
+				text-align: center;
+			}
+
+			.about-Text-Box {
+				width: 90%;
+				text-align: center;
+				margin-left: 25px;
+			}
+
+			.about-Text {
+				font-size: 15px;
+				color: rgb(74, 86, 92);
+			}
+
+			.wlPic1 {
+				position: static;
+			}
+
+			.wlPic2 {
+				display: none;
+			}
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes slideIn {
+			from {
+				transform: translateX(-50px);
+				opacity: 0;
+			}
+
+			to {
+				transform: translateX(0);
+				opacity: 1;
+			}
+		}
+
+		@keyframes floatPic2 {
+			from {
+				transform: translateY(0);
+			}
+
+			to {
+				transform: translateY(-10px);
+			}
+		}
+
+		@keyframes floatPic1 {
+			from {
+				transform: translateY(0);
+			}
+
+			to {
+				transform: translateY(10px);
+			}
+		}
+	</style>
 </head>
-<body>
-	<div class="container">
-		<h1>LEARNING MANAGEMENT PORTAL</h1>
-		<p>
-			Welcome to <b>LMS</b>
 
-		</p>
-		<a href="./ADMIN/admin_Login.html">AdminLogin</a>
-		 <a href="st_Login.html">S/TLogin</a>
+<body>
+	<div class="main-Container">
+		<div>
+			<a href="https://www.vcubesoftsolutions.com/"><img src="vcubeLogo-removebg-preview.png"
+					class="wlPic1"></a>
+		</div>
+		<div class="hero-Text-Box">
+			<h1 class="hero-Text">WELCOME</h1>
+			<h3 class="sub-Hero-Text" id="slideshowText">LEARNING MANAGEMENT SYSTEM</h3>
+		</div>
+		<div class="about-Text-Box">
+			<p class="about-Text">V Cube is the Best Software Training Institute In Hyderabad | KPHB that offers
+				comprehensive training on a wide range of software technologies, delivered by real-time & full-time
+				industry experts. We also provide lab sessions after every class to give you hands-on experience. To
+				solidify your learning, you must work on a mandatory project in a field or domain of your choice,
+				replicating real-time use cases.</p>
+		</div>
+		<div class="pageButton">
+			<button>
+				<ion-icon name="desktop-outline"></ion-icon>
+				<a href="./ADMIN/admin_Register.html">AdminLogin</a>
+			</button>
+			<button>
+				<ion-icon name="people-outline"></ion-icon>
+				<a href="st_Login.html">S/TLogin</a>
+			</button>
+		</div>
+		<img src="pic7.jpg" class="wlPic2">
 	</div>
+
+	<script>
+		const texts = [
+			"LEARNING MANAGEMENT SYSTEM",
+			"EMPOWERING YOUR FUTURE",
+			"BUILD SKILLS WITH V CUBE",
+			"GET TRAINED BY EXPERTS"
+		];
+		let index = 0;
+		const textElement = document.getElementById("slideshowText");
+
+		setInterval(() => {
+			textElement.style.opacity = 0;
+			setTimeout(() => {
+				textElement.textContent = texts[index];
+				textElement.style.opacity = 1;
+				index = (index + 1) % texts.length;
+			}, 1000);
+		}, 4000);
+	</script>
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>
