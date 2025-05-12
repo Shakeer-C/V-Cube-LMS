@@ -44,22 +44,28 @@ public class Admin_Login extends HttpServlet {
 			session.setAttribute("adminCid", adCid);
 
 			// Fetch teachers and students
+			List<MD_Admin_GetList> batchList = da.retrive_Admin("batchList",adCid);
 			List<MD_Admin_GetList> teacherList = da.retrive_Admin("teacherList",adCid);
 			List<MD_Admin_GetList> studentList = da.retrive_Admin("studentList",adCid);
-            
-			System.out.println("Teacher-> "+(List<MD_Admin_GetList>)teacherList);
-			System.out.println("Students-> "+(List<MD_Admin_GetList>)studentList);
+			
+			int batchCount = da.getCount("batchCount");
+			int teacherCount=da.getCount("teacherCount");
+			int studentCount=da.getCount("studentCount");
 			
 			// Set in request scope
+			request.setAttribute("batchList", batchList);
 			request.setAttribute("teacherList", teacherList);
 			request.setAttribute("studentList", studentList);
+			request.setAttribute("batchCount", batchCount);
+			request.setAttribute("teacherCount", teacherCount);
+			request.setAttribute("studentCount", studentCount);
 			
 			// Forward to dashboard view
 			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_View.jsp");
 			rd.forward(request, response);
 		} else {
 			// Failed login
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_Login.html");
+			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_Register.html");
 			rd.forward(request, response);
 		}
 	}
