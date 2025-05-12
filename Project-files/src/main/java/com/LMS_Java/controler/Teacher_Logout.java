@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/HTML_JSP/ADMIN/Admin_Logout")
-public class Admin_Logout extends HttpServlet {
+@WebServlet("/HTML_JSP/TEACHER/Teacher_Logout")
+public class Teacher_Logout extends HttpServlet {
     
 	private static final long serialVersionUID = 1L;
 
@@ -21,8 +21,8 @@ public class Admin_Logout extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
-        System.out.println("Admin Logout successful..!");
-        RequestDispatcher rd=  request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_Register.html");
+        System.out.println("Teacher Logout successful..!");
+        RequestDispatcher rd=  request.getRequestDispatcher("/HTML_JSP/st_Login.html");
         rd.forward(request, response);
     }
 }
