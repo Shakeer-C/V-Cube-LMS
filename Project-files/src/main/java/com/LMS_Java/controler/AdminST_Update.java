@@ -5,14 +5,13 @@ import java.io.IOException;
 import com.LMS_Java.dao.DAO_Admin_Request;
 import com.LMS_Java.model.MD_Admin_GetList;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/HTML_JSP/ADMIN/AdminST_Update")
+@WebServlet("/AdminST_Update")
 public class AdminST_Update extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -45,15 +44,13 @@ public class AdminST_Update extends HttpServlet {
 		boolean status = da.request_Admin(mdastu, ad_Req);
 
 		if (status) {
-			System.out.println(stId + " StudentUpdated sucessfully..!");
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_View.jsp");
-			rd.forward(request, response);
-
+			System.out.println(stId + " Student updated successfully.");
+			// Redirect to Admin_ViewList to reload data
+			response.sendRedirect(request.getContextPath() + "/Admin_ViewList");
 		} else {
-			System.out.println(stId + " StudentUpdated Failed..!");
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_View.jsp");
-			rd.forward(request, response);
+			System.out.println(stId + " Student update failed.");
+			// Optionally, add error message in session
+			response.sendRedirect(request.getContextPath() + "/Admin_ViewList");
 		}
-
 	}
 }

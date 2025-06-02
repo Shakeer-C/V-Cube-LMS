@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/HTML_JSP/ADMIN/AdminSTmw_Request")
+@WebServlet("/AdminSTmw_Request")
 public class AdminSTmw_Request extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -39,12 +39,12 @@ public class AdminSTmw_Request extends HttpServlet {
 
 		if (status) {
 			System.out.println(bName + " stMWUpdated sucessfully..!");
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_View.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/admin_View.jsp");
 			rd.forward(request, response);
 
 		} else {
 			System.out.println(bName + " stMWUpdated Failed..!");
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_View.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/admin_View.jsp");
 			rd.forward(request, response);
 		}
 

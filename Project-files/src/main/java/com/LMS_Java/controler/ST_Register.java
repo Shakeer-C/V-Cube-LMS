@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/HTML_JSP/ADMIN/ST_Register")
+@WebServlet("/ST_Register")
 public class ST_Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class ST_Register extends HttpServlet {
 		String crId = request.getParameter("crId");
 		String bName = request.getParameter("bName");
 		String stType = request.getParameter("stType");
-	
+
 		MD_ST_Request mdstr = new MD_ST_Request();
 		mdstr.setStId(stId);
 		mdstr.setStName(stName);
@@ -43,12 +43,13 @@ public class ST_Register extends HttpServlet {
 		DAO_Admin_Request da = new DAO_Admin_Request();
 		boolean status = da.request_Admin(mdstr, st_Req);
 
-		if(status) {
-			System.out.println("ST_Register successful..!");
-			 response.sendRedirect("/HTML_JSP/ADMIN/admin_View.jsp");
-		}else {
-			System.out.println("ST_Register failed..!");
-			response.sendRedirect("/HTML_JSP/ADMIN/admin_View.jsp");
+		if (status) {
+			// Redirect to view controller
+			response.sendRedirect(request.getContextPath() + "/Admin_ViewList");
+
+		} else {
+			// Redirect to view controller
+			response.sendRedirect(request.getContextPath() + "/Admin_ViewList");
 		}
 
 	}

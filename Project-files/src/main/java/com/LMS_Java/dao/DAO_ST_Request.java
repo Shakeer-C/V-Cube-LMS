@@ -58,6 +58,12 @@ public class DAO_ST_Request {
 	}
 
 	private boolean select_Teacher(MD_ST_Request mal, Connection con) throws SQLException {
+		
+//		System.out.println(mal.getStId());
+//		System.out.println(mal.getStName());
+//		System.out.println(mal.getStPsw());
+//		System.out.println(mal.getCrId());
+		
 		boolean status = false;
 		String sql = "SELECT * FROM teacher_list WHERE tId = ? AND tName = ? AND tPsw = ? AND crId = ?";
 
@@ -217,12 +223,16 @@ public class DAO_ST_Request {
 				list = getAll_Student(retCon, stCid_Ret);
 			} else if ("teacherList".equalsIgnoreCase(stType_Ret)) {
 				list = getAll_Teacher(retCon, stCid_Ret);
+			}else if ("labCordList".equalsIgnoreCase(stType_Ret)) {
+				list = getAll_LabCord(retCon, stCid_Ret);
 			} else if ("batchList".equalsIgnoreCase(stType_Ret)) {
 				list = getAll_Batch(retCon, stCid_Ret);
 			} else if ("contentList".equalsIgnoreCase(stType_Ret)) {
 				list = getAll_Content(retCon, stCid_Ret);
 			}else if ("teacherUploadedContent".equalsIgnoreCase(stType_Ret)) {
 				list = getST_Content(retCon, stCid_Ret);
+			}else if ("labCordUploadedContent".equalsIgnoreCase(stType_Ret)) {
+				list = getLC_Content(retCon, stCid_Ret);
 			} else if ("currentTeacherDetails".equalsIgnoreCase(stType_Ret)) {
 				list = getCurrent_Teacher(retCon, stCid_Ret);
 			} else if ("currentStudentDetails".equalsIgnoreCase(stType_Ret)) {
@@ -301,6 +311,9 @@ public class DAO_ST_Request {
 //------------------------------request_Admin(select_Admin)---------------------------------------	
 	private List<MD_ST_Request> getAll_Teacher(Connection retCon, String adCid_Ret) throws SQLException {
 		List<MD_ST_Request> list = new ArrayList<>();
+		
+//		System.out.println("teacher-Vachidhi");
+		
 		String sql = "SELECT * FROM teacher_list WHERE crId = ?";
 
 		try (PreparedStatement ps = retCon.prepareStatement(sql)) {
@@ -318,7 +331,7 @@ public class DAO_ST_Request {
 				}
 			}
 		}
-
+		
 		return list;
 	}
 
@@ -418,6 +431,30 @@ public class DAO_ST_Request {
 
 		return list;
 	}
+	
+//------------------------------request_Admin(select_Admin)---------------------------------------	
+		private List<MD_ST_Request> getAll_LabCord(Connection retCon, String adCid_Ret) throws SQLException {
+			List<MD_ST_Request> list = new ArrayList<>();
+			
+			String sql = "SELECT * FROM labCod_list WHERE crId = ?";
+
+			try (PreparedStatement ps = retCon.prepareStatement(sql)) {
+				ps.setString(1, adCid_Ret);
+
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						MD_ST_Request madgl_t = new MD_ST_Request();
+						madgl_t.setLcId(rs.getString("lcId"));
+						madgl_t.setLcName(rs.getString("lcName"));
+						madgl_t.setCrId(rs.getString("crId"));
+						list.add(madgl_t);
+					}
+				}
+			}
+			
+			return list;
+		}
+
 
 //------------------------------request_Admin(select_Admin)---------------------------------------	
 	private List<MD_ST_Request> getAll_Content(Connection retCon, String adCid_Ret) throws SQLException {
@@ -448,7 +485,6 @@ public class DAO_ST_Request {
 	
 //------------------------------request_Admin(select_Admin)---------------------------------------	
 		private List<MD_ST_Request> getST_Content(Connection retCon, String adCid_Ret) throws SQLException {
-			System.out.println(adCid_Ret);
 			
 			String stBname = adCid_Ret;
 			String[] parts = stBname.split("/");
@@ -482,6 +518,41 @@ public class DAO_ST_Request {
 
 			return list;
 		}
+
+//------------------------------request_Admin(select_Admin)---------------------------------------	
+				private List<MD_ST_Request> getLC_Content(Connection retCon, String adCid_Ret) throws SQLException {
+					
+					String stBname = adCid_Ret;
+					String[] parts = stBname.split("/");
+
+					String ctlcId = parts[0]; 
+					String ctbName = parts[1];
+					String ctcrId = parts[2];
+
+					List<MD_ST_Request> list = new ArrayList<>();
+					String sql = "SELECT * FROM lcContent_list WHERE lcId = ? AND bName = ? AND crId = ? ";
+
+					try (PreparedStatement ps = retCon.prepareStatement(sql)) {
+						ps.setString(1, ctlcId);
+						ps.setString(2, ctbName);
+						ps.setString(3, ctcrId);
+
+						try (ResultSet rs = ps.executeQuery()) {
+							while (rs.next()) {
+								MD_ST_Request madgl_ctc = new MD_ST_Request();
+								madgl_ctc.setLctTitle(rs.getString("lctTitle"));
+								madgl_ctc.setLctAssig(rs.getString("lctAssig"));
+								madgl_ctc.setLctCaseStudy(rs.getString("lctCaseStudy"));
+								madgl_ctc.setLcId(rs.getString("lcId"));
+								madgl_ctc.setBname(rs.getString("bName"));
+								madgl_ctc.setCrId(rs.getString("crId"));
+								list.add(madgl_ctc);
+							}
+						}
+					}
+
+					return list;
+				}
 
 		
 		

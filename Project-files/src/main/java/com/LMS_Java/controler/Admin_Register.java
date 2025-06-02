@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/HTML_JSP/ADMIN/Admin_Register")
+@WebServlet("/Admin_Register")
 public class Admin_Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -45,11 +45,11 @@ public class Admin_Register extends HttpServlet {
 		boolean status = da.request_Admin(madr, "Register");
 		if (status) {
 			System.out.println("Admin_Registration successful..!");
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_Login.html");
+			RequestDispatcher rd = request.getRequestDispatcher("/admin_Login.html");
 		    rd.forward(request, response);
 		} else {
 			System.out.println("Admin_Registration failed..!");
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_Register.html");
+			RequestDispatcher rd = request.getRequestDispatcher("/admin_Register.html");
 		    rd.forward(request, response);
 		}
 

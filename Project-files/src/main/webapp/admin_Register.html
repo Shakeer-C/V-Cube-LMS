@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login & Registration</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .main-Container{
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+
+    .right-Container{
+      width:60%;
+      height: 100%;
+      background-color: #f0c279;
+      position: relative;
+      animation: fadeIn .7s ease-in;
+    }
+    .wal1{
+      position: absolute;
+      right: 10px;
+      bottom: 0;
+      width: 750px;
+    }
+    .left-Container{
+      width: 40%;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-container {
+      width: 420px;
+      height: 640px;
+      perspective: 900px;
+      position: relative;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .card-container.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .logo{
+      width: 200px;
+      margin: 0 auto;
+    }
+
+    .login-card, .register-card {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      padding: 18px;
+      backface-visibility: hidden;
+      border: 2px solid black;
+    }
+    .login-card{
+      margin-top: 60px;
+      height:500px ;
+    }
+
+    .login-card {
+      z-index: 2;
+    }
+
+    .register-card {
+      transform: rotateY(180deg);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #f3a712;
+    }
+
+    .input-group, .input-icon {
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .input-group i, .input-icon i {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #aaa;
+      font-size: 16px;
+    }
+
+    .input-group input, .input-icon input {
+      width: 100%;
+      padding: 12px 15px 12px 37px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: 0.3s border-color;
+    }
+
+    .input-group input:focus, .input-icon input:focus {
+      border-color: #f3a712;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #f3a712;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #d88f05;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    a {
+      color: #f3a712;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="main-Container">
+  <div class="right-Container">
+    <img src="pic-removebg-preview (1).png" class="wal1">
+  </div>
+  <div class="left-Container">
+    <div class="card-container" id="cardContainer">
+  <div class="card-inner">
+    
+    <!-- Login Card -->
+    <div class="login-card">
+      <div class="logo">
+			<a href="index.html"><img src="vcubeLogo-removebg-preview.png"
+					class="wlPic1"></a>
+		</div>
+      <h1>Admin Login</h1>
+      <form action="Admin_Login" method="post">
+        <div class="input-icon">
+          <i class="fas fa-user"></i>
+          <input type="text" name="adName" placeholder="Name" required>
+        </div>
+        <div class="input-icon">
+          <i class="fas fa-envelope"></i>
+          <input type="email" name="adEmail" placeholder="Email" required>
+        </div>
+        <div class="input-icon">
+          <i class="fas fa-lock"></i>    
+          <input type="password" name="adPsw" placeholder="Password" required>
+        </div>
+        <div class="input-icon">
+          <i class="fa fa-graduation-cap"></i>
+          <input type="text" name="adCid" placeholder="Courses" required>
+        </div>
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a onclick="flipCard()">Register</a></p>
+      </form>
+    </div>
+
+    <!-- Register Card -->
+    <div class="register-card">
+      <div class="logo">
+			<a href="index.html"><img src="vcubeLogo-removebg-preview.png"
+					class="wlPic1"></a>
+		</div>
+      <h1>Admin Registration</h1>
+      <form action="Admin_Register" method="post" onsubmit="return validateForm()">
+        <div class="input-group">
+          <i class="fa fa-user"></i>
+          <input type="text" name="adName" placeholder="Name" required>
+        </div>
+        <div class="input-group">
+          <i class="fa fa-phone"></i>
+          <input type="number" name="adMobile" placeholder="Mobile Number" required>
+        </div>
+        <div class="input-group">
+          <i class="fa fa-envelope"></i>
+          <input type="email" name="adEmail" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+          <i class="fa fa-lock"></i>
+          <input type="password" id="password" name="adPsw" placeholder="Password" required>
+        </div>
+        <div class="input-group">
+          <i class="fa fa-lock"></i>
+          <input type="password" id="confirmPassword" name="adCpsw" placeholder="Confirm Password" required>
+        </div>
+        <div class="error" id="errorMsg">Passwords do not match!</div>
+        <div class="input-group">
+          <i class="fa fa-graduation-cap"></i>
+          <input type="text" name="adCid" placeholder="Courses" required>
+        </div>
+        <button type="submit">Register</button>
+        <p>Already have an account? <a onclick="flipCard()">Login</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+</div>
+
+
+<script>
+  function flipCard() {
+    document.getElementById('cardContainer').classList.toggle('flipped');
+  }
+
+  function validateForm() {
+    const pwd = document.getElementById('password').value;
+    const cpwd = document.getElementById('confirmPassword').value;
+    const errorMsg = document.getElementById('errorMsg');
+
+    if (pwd !== cpwd) {
+      errorMsg.style.display = 'block';
+      return false;
+    } else {
+      errorMsg.style.display = 'none';
+      return true;
+    }
+  }
+</script>
+
+</body>
+</html>

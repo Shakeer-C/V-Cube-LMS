@@ -23,6 +23,11 @@ public class MD_ST_Request {
 	private String conDisp;
 	private String conMetiral;
 	private String conAssig;
+	private String lcId;
+	private String lcName;
+	private String lctTitle;
+	private String lctAssig;
+	private String lctCaseStudy;
 
 	public String getStId() {
 		return stId;
@@ -192,6 +197,46 @@ public class MD_ST_Request {
 		this.conAssig = conAssig;
 	}
 
+	public String getLcId() {
+		return lcId;
+	}
+
+	public void setLcId(String lcId) {
+		this.lcId = lcId;
+	}
+
+	public String getLcName() {
+		return lcName;
+	}
+
+	public void setLcName(String lcName) {
+		this.lcName = lcName;
+	}
+
+	public String getLctTitle() {
+		return lctTitle;
+	}
+
+	public void setLctTitle(String lctTitle) {
+		this.lctTitle = lctTitle;
+	}
+
+	public String getLctAssig() {
+		return lctAssig;
+	}
+
+	public void setLctAssig(String lctAssig) {
+		this.lctAssig = lctAssig;
+	}
+
+	public String getLctCaseStudy() {
+		return lctCaseStudy;
+	}
+
+	public void setLctCaseStudy(String lctCaseStudy) {
+		this.lctCaseStudy = lctCaseStudy;
+	}
+
 	@Override
 	public String toString() {
 		return "MD_ST_Request [stId=" + stId + ", stName=" + stName + ", stEmail=" + stEmail + ", stMobile=" + stMobile
@@ -199,7 +244,8 @@ public class MD_ST_Request {
 				+ stType + ", sMock=" + sMock + ", sWkTst=" + sWkTst + ", batchCount=" + batchCount + ", teacherCount="
 				+ teacherCount + ", studentsCount=" + studentsCount + ", acMockCount=" + acMockCount + ", acWktstCount="
 				+ acWktstCount + ", bStudentCount=" + bStudentCount + ", conTitle=" + conTitle + ", conDisp=" + conDisp
-				+ ", conMetiral=" + conMetiral + ", conAssig=" + conAssig + "]";
+				+ ", conMetiral=" + conMetiral + ", conAssig=" + conAssig + ", lcId=" + lcId + ", lcName=" + lcName
+				+ ", lctTitle=" + lctTitle + ", lctAssig=" + lctAssig + ", lctCaseStudy=" + lctCaseStudy + "]";
 	}
 
 }

@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/HTML_JSP/STUDENT/Student_Logout")
+@WebServlet("/Student_Logout")
 public class Student_Logout extends HttpServlet {
     
 	private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class Student_Logout extends HttpServlet {
             session.invalidate();
         }
         System.out.println("Student Logout successful..!");
-        RequestDispatcher rd=  request.getRequestDispatcher("/HTML_JSP/st_Login.html");
+        RequestDispatcher rd=  request.getRequestDispatcher("/st_Login.html");
         rd.forward(request, response);
     }
 }

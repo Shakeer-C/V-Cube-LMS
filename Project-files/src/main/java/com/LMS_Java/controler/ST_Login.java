@@ -1,7 +1,7 @@
 package com.LMS_Java.controler;
 
 import java.io.IOException;
-import java.util.List;
+
 
 import com.LMS_Java.dao.DAO_ST_Request;
 import com.LMS_Java.model.MD_ST_Request;
@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/HTML_JSP/ST_Login")
+@WebServlet("/ST_Login")
 public class ST_Login extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -28,6 +28,14 @@ public class ST_Login extends HttpServlet {
         String crId = request.getParameter("crId");
         String bName = request.getParameter("bName");
         String stType = request.getParameter("stType");
+        
+//        System.out.println(stId);
+//        System.out.println(stName);
+//        System.out.println(stPsw);
+//        System.out.println(stCpsw);
+//        System.out.println(crId);
+//        System.out.println(bName);
+//        System.out.println(stType);
         
         MD_ST_Request mdstr =new MD_ST_Request();
         mdstr.setStId(stId);
@@ -44,56 +52,23 @@ public class ST_Login extends HttpServlet {
         boolean status = da.request_ST(mdstr, st_Req);
         
         if(status) {
-        	if ("student".equals(stType)) {
-        		HttpSession session = request.getSession();
-        		session.setAttribute("studentId", stId);
-    		    session.setAttribute("studentName", stName);
-    		    session.setAttribute("studentBatch", bName);
-    		    session.setAttribute("stCid", crId);
-    		    
-    		    List<MD_ST_Request> teacherList = da.retrive_ST("teacherList",crId);
-    		    List<MD_ST_Request> currentStudentDetails = da.retrive_ST("currentStudentDetails",stId);
-    		    
-    		    request.setAttribute("currentStudentDetails", currentStudentDetails);
-    		    request.setAttribute("teacherList", teacherList);
-    		    
-    		    RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/STUDENT/student_View.jsp");
-    		    rd.forward(request, response);
-    		    
-        	} else if ("teacher".equals(stType)) {
-        		HttpSession session = request.getSession();
-        		session.setAttribute("teacherId", stId);
-    		    session.setAttribute("teacherName", stName);
-    		    session.setAttribute("crId", crId);
-    		    
-    		 // Fetch teachers and students
-    			List<MD_ST_Request> batchList = da.retrive_ST("batchList",crId);
-    			List<MD_ST_Request> studentList = da.retrive_ST("studentList",crId);
-    			List<MD_ST_Request> contentList = da.retrive_ST("contentList",stId);
-    			List<MD_ST_Request> currentTeacherDetails = da.retrive_ST("currentTeacherDetails",stId);
-    			
-    			int batchCount = da.getCount("batchCount");
-    			int studentCount=da.getCount("studentCount");
-    			
-    			// Set in request scope
-    			request.setAttribute("batchList", batchList);
-    			request.setAttribute("currentTeacherDetails", currentTeacherDetails);
-    			request.setAttribute("studentList", studentList);
-    			request.setAttribute("contentList", contentList);
-    			request.setAttribute("batchCount", batchCount);
-    			request.setAttribute("studentCount", studentCount);
- 
-    		    RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/TEACHER/teacher_View.jsp");
-    		    rd.forward(request, response);
-        	}else {
-        		
-        	}
+            HttpSession session = request.getSession();
+            session.setAttribute("stId", stId);
+            session.setAttribute("stName", stName);
+            session.setAttribute("bName", bName);
+            session.setAttribute("crId", crId);
+            session.setAttribute("stType", stType);
 
+         // Redirect to view controller
+         response.sendRedirect(request.getContextPath() + "/ST_ViewList");
         	
-        }else {
-        	RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/st_Login.html");
- 		    rd.forward(request, response);
+        	        
+        } else {
+
+            RequestDispatcher rd = request.getRequestDispatcher("/st_Login.html");
+            rd.forward(request, response);
         }
+
         
         
     }

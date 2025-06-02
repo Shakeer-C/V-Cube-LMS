@@ -11,6 +11,7 @@ import java.util.List;
 import com.LMS_Java.model.MD_Admin_GetList;
 import com.LMS_Java.model.MD_Admin_Login;
 import com.LMS_Java.model.MD_Admin_Register;
+import com.LMS_Java.model.MD_LC_Request;
 import com.LMS_Java.model.MD_ST_Request;
 
 public class DAO_Admin_Request {
@@ -22,6 +23,7 @@ public class DAO_Admin_Request {
 	private static int batchCount;
 	private static int teacherCount;
 	private static int studentCount;
+	private static int labCordCount;
 
 
 //------------------------------request_Admin---------------------------------------
@@ -43,15 +45,21 @@ public class DAO_Admin_Request {
 				status = insert_Teacher((MD_ST_Request) modal, reqCon);
 			} else if ("studentRegister".equalsIgnoreCase(ad_Req)) {
 				status = insert_Student((MD_ST_Request) modal, reqCon);
+			} else if ("labCorRegister".equalsIgnoreCase(ad_Req)) {
+				status = insert_LabCord((MD_LC_Request) modal, reqCon);
 			} else if ("teacherUpdate".equalsIgnoreCase(ad_Req)) {
 				status = update_Teacher((MD_Admin_GetList) modal, reqCon);
 			} else if ("studentUpdate".equalsIgnoreCase(ad_Req)) {
 				status = update_Student((MD_Admin_GetList) modal, reqCon);
+			} else if ("labCordUpdate".equalsIgnoreCase(ad_Req)) {
+				status = update_LabCord((MD_Admin_GetList) modal, reqCon);
 			} else if ("teacherDelete".equalsIgnoreCase(ad_Req)) {
 				status = delete_Teacher((MD_Admin_GetList) modal, reqCon);
 			} else if ("studentDelete".equalsIgnoreCase(ad_Req)) {
 				status = delete_Student((MD_Admin_GetList) modal, reqCon);
-			}else if ("stMWinsert".equalsIgnoreCase(ad_Req)) {
+			} else if ("labCordDelete".equalsIgnoreCase(ad_Req)) {
+				status = delete_LabCord((MD_Admin_GetList) modal, reqCon);
+			} else if ("stMWinsert".equalsIgnoreCase(ad_Req)) {
 				status = stMW_Insert((MD_Admin_GetList) modal, reqCon);
 			}else if ("stMWupdate".equalsIgnoreCase(ad_Req)) {
 				status = stMW_Update((MD_Admin_GetList) modal, reqCon);
@@ -163,6 +171,28 @@ public class DAO_Admin_Request {
 
 		return status;
 	}
+	
+	private boolean insert_LabCord(MD_LC_Request masr, Connection reqCon) throws SQLException {
+		boolean status = false;
+		String sql = "INSERT INTO labCod_list (lcId, lcName, lcEmail, lcMobile, lcPsw, crId) VALUES (?, ?, ?, ?,?,?)";
+
+		try (PreparedStatement ps = reqCon.prepareStatement(sql)) {
+			ps.setString(1, masr.getLcId());
+			ps.setString(2, masr.getLcName());
+			ps.setString(3, masr.getLcEmail());
+			ps.setString(4, masr.getLcMobile());
+			ps.setString(5, masr.getLcPsw());
+			ps.setString(6, masr.getCrId());
+
+			int row = ps.executeUpdate();
+			if (row > 0) {
+				status = true;
+			} else {
+			}
+		}
+
+		return status;
+	}
 
 //-----------------------------updateStudent---------------------------------------
 	private static boolean update_Student(MD_Admin_GetList mdastul, Connection reqCon) {
@@ -183,7 +213,7 @@ public class DAO_Admin_Request {
 
 			if (rows > 0) {
 				status = true;
-				System.out.println("..vachindhi....");
+				
 			}
 
 		} catch (Exception e) {
@@ -192,10 +222,37 @@ public class DAO_Admin_Request {
 
 		return status;
 	}
+	
+//-----------------------------updateStudent---------------------------------------
+		private static boolean update_LabCord(MD_Admin_GetList mdastul, Connection reqCon) {
+			boolean status = false;
+			String sql = "UPDATE labCod_list SET lcName = ? , lcEmail = ? , lcMobile = ? WHERE crId= ? and lcId = ?";
+			
+			
+			try (PreparedStatement ps = reqCon.prepareStatement(sql)) {
+				ps.setString(1, mdastul.getLcName());
+				ps.setString(2, mdastul.getLcEmail());
+				ps.setString(3, mdastul.getLcMobile());
+				ps.setString(4, mdastul.getCrId());
+				ps.setString(5, mdastul.getLcId());
+
+				int rows = ps.executeUpdate();
+			
+				if (rows > 0) {
+				
+					status = true;
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return status;
+		}
 
 //-----------------------------updateStudent---------------------------------------
 	private static boolean update_Teacher(MD_Admin_GetList mdastul, Connection reqCon) {
-		boolean status = false;
+		boolean status = false;	
 		String sql = "UPDATE teacher_list SET tName = ?, tEmail = ?, tMobile = ? WHERE tId = ? AND crId = ?";
 
 		try (PreparedStatement ps = reqCon.prepareStatement(sql)) {
@@ -235,6 +292,27 @@ public class DAO_Admin_Request {
 
 		return status;
 	}
+	
+//-----------------------------deleteStudent---------------------------------------
+		private static boolean delete_LabCord(MD_Admin_GetList mdalcul, Connection reqCon) {
+			boolean status = false;
+			String sql = "DELETE FROM labCod_list WHERE lcId=? AND crId=?";
+
+			try (PreparedStatement ps = reqCon.prepareStatement(sql)) {
+				ps.setString(1, mdalcul.getLcId());
+				ps.setString(2, mdalcul.getCrId());
+				int rows = ps.executeUpdate();
+
+				if (rows > 0) {
+					status = true;
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return status;
+		}
 
 //-----------------------------deleteStudent---------------------------------------
 	private static boolean delete_Teacher(MD_Admin_GetList mdastul, Connection reqCon) {
@@ -298,7 +376,7 @@ public class DAO_Admin_Request {
 					return status;
 				}
 
-//------------------------------retrive_Admin---------------------------------------	
+//----------------------------------------------retrive_Admin----------------------------------------------------------------------	
 	public List<MD_Admin_GetList> retrive_Admin(String adType_Ret, String adCid_Ret) {
 		List<MD_Admin_GetList> list = new ArrayList<>();
 		Connection retCon = null;
@@ -312,6 +390,10 @@ public class DAO_Admin_Request {
 				list = getAll_Teacher(retCon, adCid_Ret);
 			} else if ("studentList".equalsIgnoreCase(adType_Ret)) {
 				list = getAll_Student(retCon, adCid_Ret);
+			}else if ("currentAdminDetails".equalsIgnoreCase(adType_Ret)) {
+				list = get_CurrentAdmin(retCon, adCid_Ret);
+			} else if ("labCordList".equalsIgnoreCase(adType_Ret)) {
+				list = getAll_LabCord(retCon, adCid_Ret);
 			} else if ("batchList".equalsIgnoreCase(adType_Ret)) {
 				list = getAll_Batch(retCon, adCid_Ret);
 			} else {
@@ -402,7 +484,60 @@ public class DAO_Admin_Request {
 
 		return list;
 	}
+	
+//------------------------------request_Admin(select_Admin)---------------------------------------	
+			private List<MD_Admin_GetList> get_CurrentAdmin(Connection retCon, String adCid_Ret) throws SQLException {
+				List<MD_Admin_GetList> list = new ArrayList<>();
+				String sql = "SELECT * FROM admin_list WHERE crId = ?";
 
+				try (PreparedStatement ps = retCon.prepareStatement(sql)) {
+					ps.setString(1, adCid_Ret);
+
+					try (ResultSet rs = ps.executeQuery()) {
+						while (rs.next()) {
+							MD_Admin_GetList madgl_t = new MD_Admin_GetList();
+							madgl_t.setAdName(rs.getString("aName"));
+							madgl_t.setAdEmail(rs.getString("aEmail"));
+							madgl_t.setAdMobile(rs.getString("aMobile"));
+							madgl_t.setAdPsw(rs.getString("aPsw"));
+							madgl_t.setCrId(rs.getString("crId"));
+							
+							list.add(madgl_t);
+						}
+					}
+				}
+
+				return list;
+			}
+
+//------------------------------request_Admin(select_Admin)---------------------------------------	
+		private List<MD_Admin_GetList> getAll_LabCord(Connection retCon, String adCid_Ret) throws SQLException {
+			List<MD_Admin_GetList> list = new ArrayList<>();
+			String sql = "SELECT * FROM labCod_list WHERE crId = ?";
+			DAO_Admin_Request.labCordCount=0;
+
+			try (PreparedStatement ps = retCon.prepareStatement(sql)) {
+				ps.setString(1, adCid_Ret);
+
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						MD_Admin_GetList madgl_t = new MD_Admin_GetList();
+						madgl_t.setLcId(rs.getString("lcId"));
+						madgl_t.setLcName(rs.getString("lcName"));
+						madgl_t.setLcEmail(rs.getString("lcEmail"));
+						madgl_t.setLcMobile(rs.getString("lcMobile"));
+						madgl_t.setCrId(rs.getString("crId"));
+						
+						list.add(madgl_t);
+						DAO_Admin_Request.labCordCount++;
+					}
+				}
+			}
+
+			return list;
+		}
+
+	
 //------------------------------request_Admin(select_Admin)---------------------------------------	
 	private List<MD_Admin_GetList> getAll_Batch(Connection retCon, String adCid_Ret) throws SQLException {
 		List<MD_Admin_GetList> list = new ArrayList<>();
@@ -431,7 +566,7 @@ public class DAO_Admin_Request {
 							}
 						}
 					}
-					madgl_t.setBstudentCount(bStudentCount);
+					madgl_t.setbStudentCount(bStudentCount);
 					
 					String sql2 = "SELECT * FROM mockWeekTest_list WHERE  bName = ? AND crId = ?";
 
@@ -466,6 +601,8 @@ public class DAO_Admin_Request {
 			count=teacherCount;
 		}else if("studentCount".equalsIgnoreCase(adc_Type)){
 			count=studentCount;
+		}else if("labCordCount".equalsIgnoreCase(adc_Type)){
+			count=labCordCount;
 		}
 		return count;
 		

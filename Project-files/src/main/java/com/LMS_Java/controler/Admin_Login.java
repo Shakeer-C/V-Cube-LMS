@@ -1,12 +1,9 @@
 package com.LMS_Java.controler;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.LMS_Java.dao.DAO_Admin_Request;
-import com.LMS_Java.model.MD_Admin_GetList;
 import com.LMS_Java.model.MD_Admin_Login;
-
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/HTML_JSP/ADMIN/Admin_Login")
+@WebServlet("/Admin_Login")
 public class Admin_Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -43,29 +40,12 @@ public class Admin_Login extends HttpServlet {
 			session.setAttribute("adminEmail", adEmail);
 			session.setAttribute("adminCid", adCid);
 
-			// Fetch teachers and students
-			List<MD_Admin_GetList> batchList = da.retrive_Admin("batchList",adCid);
-			List<MD_Admin_GetList> teacherList = da.retrive_Admin("teacherList",adCid);
-			List<MD_Admin_GetList> studentList = da.retrive_Admin("studentList",adCid);
-			
-			int batchCount = da.getCount("batchCount");
-			int teacherCount=da.getCount("teacherCount");
-			int studentCount=da.getCount("studentCount");
-			
-			// Set in request scope
-			request.setAttribute("batchList", batchList);
-			request.setAttribute("teacherList", teacherList);
-			request.setAttribute("studentList", studentList);
-			request.setAttribute("batchCount", batchCount);
-			request.setAttribute("teacherCount", teacherCount);
-			request.setAttribute("studentCount", studentCount);
-			
-			// Forward to dashboard view
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_View.jsp");
-			rd.forward(request, response);
+			// Redirect to view controller
+			response.sendRedirect(request.getContextPath() + "/Admin_ViewList");
+
 		} else {
 			// Failed login
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/ADMIN/admin_Register.html");
+			RequestDispatcher rd = request.getRequestDispatcher("/admin_Register.html");
 			rd.forward(request, response);
 		}
 	}

@@ -5,14 +5,13 @@ import java.io.IOException;
 import com.LMS_Java.dao.DAO_ST_Request;
 import com.LMS_Java.model.MD_ST_Request;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/HTML_JSP/TEACHER/ST_ConDelete")
+@WebServlet("/ST_ConDelete")
 public class ST_ConDelete extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -53,13 +52,12 @@ public class ST_ConDelete extends HttpServlet {
 
 		if (status) {
 			System.out.println(stId + " Content Deleted sucessfully..!");
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/TEACHER/teacher_View.jsp");
-			rd.forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/ST_ViewList");
 
 		} else {
 			System.out.println(stId + " Content Deleted Failed..!");
-			RequestDispatcher rd = request.getRequestDispatcher("/HTML_JSP/TEACHER/teacher_View.jsp");
-			rd.forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/ST_ViewList");
+
 		}
 
 	}
